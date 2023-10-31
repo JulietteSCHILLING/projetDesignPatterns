@@ -1,0 +1,20 @@
+{
+  "name": "projetdesignpatterns",
+  "version": "1.0.0",
+  "description": "Projet de dev mob en design patterns M1-S7",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
