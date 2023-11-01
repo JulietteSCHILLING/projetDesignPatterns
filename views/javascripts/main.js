@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Boucle sur les données pour afficher chaque utilisateur
     data.forEach(user => {
       const userElement = document.createElement('div');
-      userElement.textContent = `ID: ${user.id} - Nom: ${user.nom}`;
+      userElement.textContent = `ID : ${user.id} - Nom : ${user.nom}`;
       userList.appendChild(userElement);
     });
   })
