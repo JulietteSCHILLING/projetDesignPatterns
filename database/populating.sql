@@ -1,0 +1,2 @@
+INSERT INTO COMPTE(nomCompte, prenomCompte, mail, login, mdp) VALUES ('Schilling', 'Juliette', 'mailJuliette@mail.com', 'loginJ', 'mdpJ');
+INSERT INTO COMPTE(nomCompte, prenomCompte, mail, login, mdp) VALUES ('Nicolas', 'Romain', 'mailRomain@mail.com', 'loginR', 'mdpR');

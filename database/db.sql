@@ -1,0 +1,49 @@
+DROP TABLE CASEDOC;
+DROP TABLE ACCES;
+DROP TABLE MODIFICATION;
+DROP TABLE DOCUMENT;
+DROP TABLE COMPTE;
+
+
+CREATE TABLE IF NOT EXISTS COMPTE(
+    idCompte INT AUTO_INCREMENT PRIMARY KEY,
+    nomCompte TEXT NOT NULL,
+    prenomCompte TEXT NOT NULL,
+    mail TEXT NOT NULL,
+    login TEXT NOT NULL,
+    mdp TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS DOCUMENT(
+    idDocument INT AUTO_INCREMENT PRIMARY KEY,
+    idCompte INT,
+    titre TEXT NULL,
+    dateCreation DATE NOT NULL,
+    dateDernModif DATE NOT NULL,
+    FOREIGN KEY (idCompte) REFERENCES COMPTE(idCompte)
+);
+
+CREATE TABLE IF NOT EXISTS CASEDOC(
+    idCase INT AUTO_INCREMENT PRIMARY KEY,
+    idDocument INT,
+    texte TEXT NULL,
+    ligne INT NOT NULL,
+    colonne INT NOT NULL,
+    FOREIGN KEY (idDocument) REFERENCES DOCUMENT(idDocument)
+);
+
+CREATE TABLE IF NOT EXISTS ACCES(
+    idCompte INT,
+    idDocument INT,
+    PRIMARY KEY (idCompte, idDocument),
+    FOREIGN KEY (idCompte) REFERENCES COMPTE(idCompte),
+    FOREIGN KEY (idDocument) REFERENCES DOCUMENT(idDocument)
+);
+
+CREATE TABLE IF NOT EXISTS MODIFICATION(
+    idCompte INT,
+    idDocument INT,
+    PRIMARY KEY (idCompte, idDocument),
+    FOREIGN KEY (idCompte) REFERENCES COMPTE(idCompte),
+    FOREIGN KEY (idDocument) REFERENCES DOCUMENT(idDocument)
+);
