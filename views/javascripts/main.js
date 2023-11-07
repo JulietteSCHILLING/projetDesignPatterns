@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Boucle sur les données pour afficher chaque utilisateur
     data.forEach(user => {
-      const userElement = document.createElement('div');
+      const userElement = document.createElement('li');
       userElement.textContent = `ID : ${user.id} - Nom : ${user.nom}`;
       userList.appendChild(userElement);
     });

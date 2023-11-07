@@ -19,11 +19,27 @@ router.get('/', (req, res) => {
   });
   
 
-router.get('/new', (req, res) => {
+router.get('/renderNew', (req, res) => {
   res.render('users/new');
 });
 
-router.post('/', (req, res) => {
+
+// Route pour afficher le formulaire de suppression
+router.get('/renderDelete', (req, res) => {
+  const connection = db.openDB();
+  connection.query('SELECT * FROM User', (err, users) => {
+      db.closeDB(connection);
+      if (err) {
+          console.error('Erreur lors de la récupération des utilisateurs : ' + err);
+          res.status(500).send('Erreur lors de la récupération des utilisateurs');
+      } else {
+          // Rendez le fichier EJS et passez les données des utilisateurs à la vue
+          res.render('users/delete', { users: users });
+      }
+  });
+});
+
+router.post('/new', (req, res) => {
   const nom = req.body.firstname; // Récupérez le prénom depuis le corps de la requête
 
   // Utilisez la méthode de placeholder ? pour sécuriser la requête SQL
@@ -42,8 +58,34 @@ router.post('/', (req, res) => {
   });
 });
 
+
+// Route pour supprimer un utilisateur par son ID
+router.post('/delete', (req, res) => {
+  const userId = req.body.userId; // Récupérez l'ID de l'utilisateur à supprimer depuis les paramètres de l'URL
+  
+  // Effectuez une requête à la base de données pour supprimer l'utilisateur
+  const connection = db.openDB();
+  connection.query('DELETE FROM User WHERE id = ?', [userId], (err, result) => {
+    db.closeDB(connection);
+    if (err) {
+      console.error('Erreur lors de la suppression de l\'utilisateur : ' + err);
+      res.status(500).send('Erreur lors de la suppression de l\'utilisateur');
+    } else {
+      if (result.affectedRows > 0) {
+        console.log('Utilisateur supprimé avec succès');
+        res.send(`Utilisateur avec l'ID ${userId} a été supprimé avec succès`);
+      } else {
+        console.log('Utilisateur non trouvé');
+        res.status(404).send(`Utilisateur avec l'ID ${userId} non trouvé`);
+      }
+    }
+  });
+});
+
+
 router.get('/:id', (req, res) => {
   res.send(`User get avec son id ${req.params.id}`);
 });
+
 
 module.exports = router;

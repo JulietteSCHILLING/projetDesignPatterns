@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supprimer un utilisateur</title>
+</head>
+<body>
+    <h1>Sélectionnez l'utilisateur à supprimer :</h1>
+    <form action="/users/delete" method="post">
+        <label for="userId">Choisissez un utilisateur :</label>
+        <select id="userId" name="userId">
+            <% users.forEach(user => { %>
+                <option value="<%= user.id %>"><%= user.nom %></option>
+            <% }); %>
+        </select>
+        <button type="submit">Supprimer</button>
+    </form>
+</body>
+</html>
