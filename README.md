@@ -2,13 +2,14 @@
 Projet de dev mob en design patterns M1-S7
 
 
-toutes les commandes que j'ai fais : 
+toutes les commandes : 
 
 - npm init -y (pas besoin du coup pour vous)
 - npm i express
 - npm i --save-dev nodemon
 - npm i ejs
 - npm install mysql2
+- /bin/python3 config/create_db.py (pour installer la base de données)
 
 et pour lancer le serveur : npm run devStart
 
