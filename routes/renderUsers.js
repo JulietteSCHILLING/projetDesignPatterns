@@ -6,6 +6,10 @@ router.get('/renderNew', (req, res) => {
     res.render('users/new');
 });
 
+router.get('/renderConnexion', (req, res) => {
+    res.render('users/connexion');
+});
+
 
 // Route pour afficher le formulaire de suppression
 router.get('/renderDelete', (req, res) => {
