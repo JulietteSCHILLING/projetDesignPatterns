@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= document[0].titre %></title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1><%= document[0].titre %></h1>
+    <p>Date de création : <%= document[0].dateCreation.toDateString() %></p>
+    <p>Date de dernière modification : <%= document[0].dateDernModif.toDateString() %></p>
+
+    <h2>Cases du document :</h2>
+    <table>
+        <% let maxColumn = 0; %>
+        <% document.forEach(function(caseItem) { %>
+            <% maxColumn = Math.max(maxColumn, caseItem.colonne); %>
+        <% }); %>
+        
+        <% for (let row = 1; row <= Math.ceil(document.length / maxColumn); row++) { %>
+            <tr>
+                <% for (let col = 1; col <= maxColumn; col++) { %>
+                    <% let caseIndex = (row - 1) * maxColumn + col - 1; %>
+                    <% if (caseIndex < document.length) { %>
+                        <td><%= document[caseIndex].texte %></td>
+                    <% } else { %>
+                        <td></td>
+                    <% } %>
+                <% } %>
+            </tr>
+        <% } %>
+    </table>
+</body>
+</html>

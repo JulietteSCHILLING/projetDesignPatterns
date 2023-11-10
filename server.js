@@ -15,12 +15,13 @@ app.use(express.static(path.join(__dirname, 'views')));
 
 
 const userRouter = require('./routes/users');
-
 app.use("/users", userRouter);
 
 const renderUserRouter = require('./routes/renderUsers');
-
 app.use("/renderUsers", renderUserRouter);
+
+const renderDocumentRouter = require('./routes/renderDocument');
+app.use("/renderDocument", renderDocumentRouter);
 
 app.listen(3000);
 
