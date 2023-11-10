@@ -19,26 +19,6 @@ router.get('/', (req, res) => {
   });
   
 
-router.get('/renderNew', (req, res) => {
-  res.render('users/new');
-});
-
-
-// Route pour afficher le formulaire de suppression
-router.get('/renderDelete', (req, res) => {
-  const connection = db.openDB();
-  connection.query('SELECT idCompte as id, prenomCompte as nom FROM COMPTE', (err, users) => {
-      db.closeDB(connection);
-      if (err) {
-          console.error('Erreur lors de la récupération des utilisateurs : ' + err);
-          res.status(500).send('Erreur lors de la récupération des utilisateurs');
-      } else {
-          // Rendez le fichier EJS et passez les données des utilisateurs à la vue
-          res.render('users/delete', { users: users });
-      }
-  });
-});
-
 router.post('/new', (req, res) => {
   console.log('Requête POST reçue');
   const nom = req.body.lastname;

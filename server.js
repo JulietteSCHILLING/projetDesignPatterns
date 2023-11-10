@@ -18,6 +18,10 @@ const userRouter = require('./routes/users');
 
 app.use("/users", userRouter);
 
+const renderUserRouter = require('./routes/renderUsers');
+
+app.use("/renderUsers", renderUserRouter);
+
 app.listen(3000);
 
 
