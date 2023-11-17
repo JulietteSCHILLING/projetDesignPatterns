@@ -34,4 +34,17 @@ router.get('/renderDocument/:idDoc', (req, res) => {
     });
 });
 
+router.get("/documents", (req, res)=> {
+    const connection = db.openDB();
+    connection.query('SELECT * from DOCUMENT inner join COMPTE on DOCUMENT.idCompte = COMPTE.idCompte', (err, results) => {
+        if (err) {
+          console.error('Erreur lors de la récupération des utilisateurs : ' + err);
+          res.status(500).send('Erreur lors de la récupération des utilisateurs');
+          return;
+        }
+        db.closeDB(connection);
+        res.json(results);
+    });
+});
+
 module.exports = router;
