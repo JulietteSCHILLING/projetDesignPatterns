@@ -34,6 +34,12 @@ router.get('/renderDocument/:idDoc', (req, res) => {
     });
 });
 
+
+router.get('/renderCreateDocument', (req, res) => {
+    res.render('document/new');
+});
+
+
 router.get("/documents", (req, res)=> {
     const connection = db.openDB();
     connection.query('SELECT * from DOCUMENT inner join COMPTE on DOCUMENT.idCompte = COMPTE.idCompte', (err, results) => {

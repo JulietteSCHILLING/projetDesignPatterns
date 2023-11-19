@@ -4,9 +4,8 @@ function openDB() {
   const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root',
-    database: 'Test',
-    port: 8889
+    database: 'ProjetDesignPatterns',
+    port: 3306
   });
 
   connection.connect((err) => {
