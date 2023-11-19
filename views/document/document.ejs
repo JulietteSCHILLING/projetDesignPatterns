@@ -11,9 +11,40 @@
         }
 
         th, td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
+            cursor: pointer; /* Ajout d'un curseur pointer pour indiquer que la cellule est cliquable */
+        }
+
+        td {
+            position: relative;
+        }
+
+        span {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 80px; /* Limite la largeur du texte pour l'affichage initial */
+        }
+
+        input {
+            width: 100%;
+        }
+
+        form {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        form input {
+            width: calc(100% - 16px);
+            margin: 8px;
         }
     </style>
 </head>
@@ -34,7 +65,12 @@
                 <% for (let col = 1; col <= maxColumn; col++) { %>
                     <% let caseIndex = (row - 1) * maxColumn + col - 1; %>
                     <% if (caseIndex < document.length) { %>
-                        <td><%= document[caseIndex].texte %></td>
+                        <td ondblclick="editCell('<%= document[caseIndex].idCase %>')">
+                            <span id="text<%= document[caseIndex].idCase %>"><%= document[caseIndex].texte %></span>
+                            <form id="form<%= document[caseIndex].idCase %>" onsubmit="updateText('<%= document[caseIndex].idCase %>'); return false;">
+                                <input type="text" id="input<%= document[caseIndex].idCase %>" value="<%= document[caseIndex].texte %>" />
+                            </form>
+                        </td>
                     <% } else { %>
                         <td></td>
                     <% } %>
@@ -42,5 +78,44 @@
             </tr>
         <% } %>
     </table>
+
+    <script>
+        function editCell(caseId) {
+            // Cacher le texte et afficher le formulaire d'édition
+            document.getElementById('text' + caseId).style.display = 'none';
+            document.getElementById('form' + caseId).style.display = 'block';
+            document.getElementById('input' + caseId).focus(); // Mettre le focus sur le champ de texte
+        }
+
+        function updateText(caseId) {
+        // Récupérer la nouvelle valeur depuis le champ de texte
+        const newText = document.getElementById('input' + caseId).value;
+
+        // Mettre à jour la valeur affichée et masquer le formulaire
+        document.getElementById('text' + caseId).innerText = newText;
+        document.getElementById('text' + caseId).style.display = 'block';
+        document.getElementById('form' + caseId).style.display = 'none';
+
+        // Envoyer la nouvelle valeur au serveur pour la mise à jour dans la base de données
+        fetch('/document/updateCase', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                caseId: caseId,
+                newText: newText,
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur lors de la mise à jour de la case');
+            }
+            return response;
+        })
+        .then(() => console.log('Case mise à jour avec succès'))
+        .catch(error => console.error('Erreur lors de la mise à jour de la case :', error.message));
+    }
+    </script>
 </body>
 </html>

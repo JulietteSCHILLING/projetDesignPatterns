@@ -28,7 +28,7 @@ router.get('/renderDocument/:idDoc', (req, res) => {
             res.status(500).send('Erreur lors de la récupération du document');
         } else {
             // Rendez le fichier EJS et passez les données du document à la vue
-            console.log(document);
+            //console.log(document);
             res.render('document/document', { document: document });
         }
     });
