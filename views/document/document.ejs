@@ -19,44 +19,47 @@
     <p>Date de dernière modification : <%= document[0].dateDernModif.toDateString() %>
     </p>
 
-    
-    <h2>Cases du document :</h2>
+
     <table>
         <thead>
             <tr>
                 <th></th>
-                <% for (let col = 1; col <= 26; col++) { %>
-                    <th><%= col %></th>
-                <% } %>
+                <% for (let col=1; col <=26; col++) { %>
+                    <th>
+                        <%= col %>
+                    </th>
+                    <% } %>
             </tr>
         </thead>
         <tbody>
-            <% for (let row = 1; row <= Math.ceil(document.length / 26); row++) { %>
+            <% for (let row=1; row <=Math.ceil(document.length / 26); row++) { %>
                 <tr>
-                    <th><%= row %></th>
-                    <% for (let col = 1; col <= 26; col++) { %>
-                        <% let caseIndex = (row - 1) * 26 + col - 1; %>
-                        <% if (caseIndex < document.length) { %>
-                            <td class="editable-cell" onclick="editCell('<%= document[caseIndex].idCase %>')">
-                                <span id="text<%= document[caseIndex].idCase %>">
-                                    <%= document[caseIndex].texte %>
-                                </span>
-                                <form id="form<%= document[caseIndex].idCase %>"
-                                    onsubmit="updateText('<%= document[caseIndex].idCase %>'); return false;">
-                                    <input type="text" id="input<%= document[caseIndex].idCase %>"
-                                        value="<%= document[caseIndex].texte %>" />
-                                </form>
-                            </td>
-                            
-                        <% } else { %>
-                            <td></td>
-                        <% } %>
-                    <% } %>
+                    <th>
+                        <%= row %>
+                    </th>
+                    <% for (let col=1; col <=26; col++) { %>
+                        <% let caseIndex=(row - 1) * 26 + col - 1; %>
+                            <% if (caseIndex < document.length) { %>
+                                <td class="editable-cell" onclick="editCell('<%= document[caseIndex].idCase %>')">
+                                    <span id="text<%= document[caseIndex].idCase %>">
+                                        <%= document[caseIndex].texte %>
+                                    </span>
+                                    <form id="form<%= document[caseIndex].idCase %>"
+                                        onsubmit="updateText('<%= document[caseIndex].idCase %>'); return false;">
+                                        <input type="text" id="input<%= document[caseIndex].idCase %>"
+                                            value="<%= document[caseIndex].texte %>" />
+                                    </form>
+                                </td>
+
+                                <% } else { %>
+                                    <td></td>
+                                    <% } %>
+                                        <% } %>
                 </tr>
-            <% } %>
+                <% } %>
         </tbody>
     </table>
-    
+
 
     <script>
         function editCell(caseId) {
@@ -64,33 +67,26 @@
             const textElement = document.getElementById('text' + caseId);
             const formElement = document.getElementById('form' + caseId);
             const inputElement = document.getElementById('input' + caseId);
-    
+
             // Cacher le texte et afficher le formulaire d'édition
             textElement.style.display = 'none';
             formElement.style.display = 'block';
-    
+
             // Afficher et focus sur l'input
             inputElement.style.display = 'block';
             inputElement.focus();
         }
-    
-        function updateText(caseId) {
-            // Récupérer les éléments associés à la cellule
-            const textElement = document.getElementById('text' + caseId);
-            const formElement = document.getElementById('form' + caseId);
-            const inputElement = document.getElementById('input' + caseId);
-    
-            // Récupérer la nouvelle valeur depuis le champ de texte
-            const newText = inputElement.value;
-    
-            // Mettre à jour la valeur affichée et masquer le formulaire
-            textElement.innerText = newText;
-            textElement.style.display = 'block';
-            formElement.style.display = 'none';
-    
-            // Masquer l'input
-            inputElement.style.display = 'none';
-    
+
+        function updateTextOnBlur(caseId) {
+            const newText = document.getElementById('input' + caseId).value;
+            updateText(caseId, newText);
+        }
+
+        function updateText(caseId, newText) {
+            document.getElementById('text' + caseId).innerText = newText;
+            document.getElementById('text' + caseId).style.display = 'block';
+            document.getElementById('form' + caseId).style.display = 'none';
+
             // Envoyer la nouvelle valeur au serveur pour la mise à jour dans la base de données
             fetch('/document/updateCase', {
                 method: 'POST',
@@ -111,9 +107,19 @@
                 .then(() => console.log('Case mise à jour avec succès'))
                 .catch(error => console.error('Erreur lors de la mise à jour de la case :', error.message));
         }
+
+        // Attacher l'événement blur à tous les champs de texte
+        const inputFields = document.querySelectorAll('input[type="text"]');
+        inputFields.forEach(input => {
+            input.addEventListener('blur', function () {
+                const caseId = this.id.substring(5); // Extraire l'ID de la case du champ de texte
+                updateTextOnBlur(caseId);
+            });
+        });
+
     </script>
-    
-    
+
+
 </body>
 
 </html>

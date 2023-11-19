@@ -63,4 +63,43 @@ router.post('/updateCase', (req, res) => {
 });
 
 
+router.post('/renommer', (req, res) => {
+    const docId = req.body.documentId;
+    const newName = req.body.newDocumentName;
+
+    connection = db.openDB();
+
+    // Effectuez la mise à jour dans la base de données avec la nouvelle valeur
+    connection.query('UPDATE DOCUMENT SET titre = ? WHERE idDocument = ?', [newName, docId], (err) => {
+        if (err) {
+            db.closeDB(connection);
+            console.error('Erreur lors de la mise à jour du doc : ' + err);
+            res.status(500).send('Erreur lors de la mise à jour du doc');
+        } else {
+            db.closeDB(connection);
+            console.log('Doc mis à jour avec succès');
+            res.status(200).send('Doc mis à jour avec succès');
+        }
+    });
+});
+
+router.delete('/supprimer', (req, res) => {
+    const docId = req.body.documentId;
+
+    connection = db.openDB();
+
+    // Effectuez la mise à jour dans la base de données avec la nouvelle valeur
+    connection.query('DELETE FROM DOCUMENT WHERE idDocument = ?', [docId], (err) => {
+        if (err) {
+            db.closeDB(connection);
+            console.error('Erreur lors de la suppression du doc : ' + err);
+            res.status(500).send('Erreur lors de la suppression du doc');
+        } else {
+            db.closeDB(connection);
+            console.log('Doc supprimé avec succès');
+            res.status(200).send('Doc supprimé avec succès');
+        }
+    });
+});
+
 module.exports = router;
