@@ -21,17 +21,16 @@
         </div>
         <div id="userMenu">
             <!-- Contenu du menu utilisateur -->
-            <button>Se connecter</button>
-            <button>S'inscrire</button>
+            <a href="/renderUsers/renderConnexion"><button>Se connecter</button></a>
+            <a href="/renderUsers/renderNew"><button>S'inscrire</button></a>
         </div>
     </header>
     
-    <h2 style = "text-align: center;">Liste des documents : </h2>
+    <h2 style = "text-align: center;">Liste de vos documents : </h2>
     <ul id="userDocs"></ul>
     <a href="/renderUsers/renderNew"><button>Ajouter un utilisateur</button></a>
     <a href="/renderUsers/renderDelete"><button>Supprimer un utilisateur</button></a>
     <a href="/renderDocument/renderCreateDocument"><button>Créer un document</button></a>
-    <a href="/renderUsers/renderConnexion"><button>Connexion d'un utilisateur</button></a>
     <script src="/javascripts/main.js"></script>
     <script>
         // JavaScript pour gérer l'affichage du menu utilisateur

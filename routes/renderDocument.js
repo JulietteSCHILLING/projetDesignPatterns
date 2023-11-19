@@ -55,4 +55,21 @@ router.get("/documents", (req, res)=> {
     });
 });
 
+router.get("/documentsByCompte", (req, res)=> {
+    const idCompte = req.cookies.user;
+
+    const connection = db.openDB();
+    connection.query('SELECT * from DOCUMENT inner join COMPTE on DOCUMENT.idCompte = COMPTE.idCompte WHERE COMPTE.idCompte = ?', [idCompte], (err, results) => {
+        if (err) {
+          console.error('Erreur lors de la récupération des utilisateurs : ' + err);
+          res.status(500).send('Erreur lors de la récupération des utilisateurs');
+          return;
+        }
+        db.closeDB(connection);
+        res.json(results);
+    });
+});
+
+
+
 module.exports = router;

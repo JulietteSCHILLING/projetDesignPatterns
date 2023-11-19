@@ -17,7 +17,7 @@ function search_document() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  fetch("/renderDocument/documents")
+  fetch("/renderDocument/documentsByCompte")
   .then(response => {
     if (!response.ok) {
       throw new Error(response.statusText);
