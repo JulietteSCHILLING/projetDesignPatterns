@@ -15,14 +15,14 @@
         <div>
             <input id="searchbar" onkeyup="search_document()" type="text" name="search" placeholder="Recherche">
         </div>
-        <div id="userButton"> 
+        <div id="userButton">
             <img src="/images/user.png" alt="Logo" width="75" height="50">
+            <span id="username"></span>
         </div>
         <div id="userMenu">
             <!-- Contenu du menu utilisateur -->
-            <button> Se connecter</button>
-            <button> S'inscrire</button>
-            
+            <button>Se connecter</button>
+            <button>S'inscrire</button>
         </div>
     </header>
     
@@ -40,6 +40,21 @@
         
         userButton.addEventListener('click', () => {
             userMenu.style.display = (userMenu.style.display === 'none' || userMenu.style.display === '') ? 'block' : 'none';
+        });
+
+        //Pour l'affichage de l'utilisateur
+        $(document).ready(function () {
+            // Récupérer le nom d'utilisateur depuis le serveur en utilisant l'ID stocké dans les cookies
+            $.get("/users/getNomPrenom", function (data) {
+                // Mettre à jour le contenu du menu utilisateur avec le nom récupéré
+                if (data && data.length > 0) {
+                    const username = data[0].nomCompte;
+                    const userFirstname = data[0].prenomCompte;
+                    $("#username").text(`Bonjour, ${userFirstname} ${username} !`);
+                }
+            }).fail(function () {
+                console.error('Erreur lors de la récupération du nom d\'utilisateur');
+            });
         });
     </script>
 </body>
