@@ -1,0 +1,93 @@
+/* Housekeeping */
+html {
+    font: 0.75em/1.5 sans-serif;
+    color: #333;
+    background-color: #fff;
+    padding: 1em;
+}
+
+/* Tables */
+table {
+    width: auto;
+    margin-bottom: 1em;
+    border-collapse: collapse;
+}
+
+th {
+    font-weight: bold;
+    background-color: #ddd;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    position: relative; /* Ajout d'une position relative pour permettre un positionnement absolu à l'intérieur */
+}
+
+td {
+    position: relative;
+    min-width: 70px;
+    height: auto;
+    width: auto;
+    border: 1px solid #ccc; /* Ajout d'une bordure aux cellules */
+    white-space: nowrap; /* Empêche le texte de se replier à la ligne par défaut */
+    overflow: hidden; /* Cache tout texte dépassant de la cellule */
+    text-overflow: ellipsis; /* Affiche des points de suspension pour indiquer du texte coupé */
+}
+
+.editable-cell {
+    cursor: text;
+}
+
+
+td input {
+    display: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    font-family: Verdana, Helvetica, Arial, FreeSans, sans-serif;
+    font-size: 12px;
+    padding: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Assurez-vous que l'input est au-dessus de la cellule */
+    background: transparent; /* Rendez le fond de l'input transparent pour voir la cellule en dessous */
+}
+
+td:hover input {
+    display: none;
+    z-index: 2; /* Assurez-vous que l'input survolé est au-dessus de tout */
+}
+
+td span,
+td input {
+    box-sizing: border-box; /* Permet de conserver la largeur totale avec le padding */
+}
+
+input:focus {
+    border: 2px solid #5292F7;
+    outline: none;
+}
+
+
+input {
+    display: none;
+    border: none;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    font-family: Verdana, Helvetica, Arial, FreeSans, sans-serif;
+    font-size: 12px;
+    padding: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Assurez-vous que l'input est au-dessus de la cellule */
+    background: transparent; /* Rendez le fond de l'input transparent pour voir la cellule en dessous */
+}
+
+
+td span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px;
+}

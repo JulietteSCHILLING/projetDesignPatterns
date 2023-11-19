@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="./css/index.css" rel="stylesheet">
+    <link href="/stylesheets/index.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <header>
         <div>
-            <a href="/"><img src="./images/excel.jpeg" alt="Logo" width="100" height="50"></a>
+            <a href="/"><img src="/images/excel.jpeg" alt="Logo" width="100" height="50"></a>
         </div>
         <div>
             <input id="searchbar" onkeyup="search_document()" type="text" name="search" placeholder="Recherche">
         </div>
         <div id="userButton"> 
-            <img src="./images/user.png" alt="Logo" width="75" height="50">
+            <img src="/images/user.png" alt="Logo" width="75" height="50">
         </div>
         <div id="userMenu">
             <!-- Contenu du menu utilisateur -->
@@ -30,10 +30,9 @@
     <ul id="userDocs"></ul>
     <a href="/renderUsers/renderNew"><button>Ajouter un utilisateur</button></a>
     <a href="/renderUsers/renderDelete"><button>Supprimer un utilisateur</button></a>
-    <a href="/renderDocument/renderDocument/1"><button>Afficher le doc 1</button></a>
     <a href="/renderDocument/renderCreateDocument"><button>Créer un document</button></a>
     <a href="/renderUsers/renderConnexion"><button>Connexion d'un utilisateur</button></a>
-    <script src="./javascripts/main.js"></script>
+    <script src="/javascripts/main.js"></script>
     <script>
         // JavaScript pour gérer l'affichage du menu utilisateur
         const userButton = document.getElementById('userButton');

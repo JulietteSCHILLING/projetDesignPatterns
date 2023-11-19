@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
 
+
+
 // Route pour afficher le document
 router.get('/renderDocument/:idDoc', (req, res) => {
     const connection = db.openDB();
