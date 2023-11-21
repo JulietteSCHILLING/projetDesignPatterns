@@ -1,6 +1,7 @@
-import { getCookie, supprimerCookie } from './cookie.js';
+
 
 let test = getCookie('user');
+
 
 function search_document() {
   let input = $('#searchbar').val().toLowerCase();
@@ -126,6 +127,8 @@ function fetchAndDisplayDocuments() {
         console.error(error);
       });
 }
+
+
 
 
 

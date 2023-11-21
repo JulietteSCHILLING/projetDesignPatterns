@@ -1,4 +1,4 @@
-export function getCookie(name) {
+function getCookie(name) {
     const cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i].trim();
@@ -10,6 +10,6 @@ export function getCookie(name) {
     return null; // Renvoie null si le cookie n'est pas trouvé
 }
 
-export function supprimerCookie(nomCookie) {
+function supprimerCookie(nomCookie) {
     document.cookie = nomCookie + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
