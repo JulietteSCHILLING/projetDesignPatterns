@@ -21,6 +21,15 @@
             <a id ="connexion" href="/renderUsers/renderConnexion"><button>Se connecter</button></a>
             <a id = "inscription" href="/renderUsers/renderNew"><button>S'inscrire</button></a>
         </div>
+        
+        <script>
+            const userButton = document.getElementById('userButton');
+            const userMenu = document.getElementById('userMenu');
+            
+            userButton.addEventListener('click', () => {
+                userMenu.style.display = (userMenu.style.display === 'none' || userMenu.style.display === '') ? 'block' : 'none';
+            });
+        </script> 
     </header>
     <form action="/users/connexion" method="post" class="box">
         <svg width="30" height="30" viewBox="0 0 24 24">

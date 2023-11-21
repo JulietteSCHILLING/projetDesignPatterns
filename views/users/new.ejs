@@ -7,7 +7,7 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/stylesheets/connexion.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+    
     <script src = "/javascripts/inscription.js"></script>
     
 </head>
@@ -26,6 +26,14 @@
             <a id ="connexion" href="/renderUsers/renderConnexion"><button>Se connecter</button></a>
             <a id = "inscription" href="/renderUsers/renderNew"><button>S'inscrire</button></a>
         </div>
+        <script>
+            const userButton = document.getElementById('userButton');
+            const userMenu = document.getElementById('userMenu');
+            
+            userButton.addEventListener('click', () => {
+                userMenu.style.display = (userMenu.style.display === 'none' || userMenu.style.display === '') ? 'block' : 'none';
+            });
+        </script>
     </header>
     
     <form method="post" class="box" id = "forminscription">
@@ -52,7 +60,7 @@
         <!-- <% if (locals.error) { %>
             <p class="error-message"><%= locals.error %></p>
             <% } %> -->
-            <button type="submit" > S'inscrire </button>
+            <button type="submit"  id ="submit"> S'inscrire </button>
         </form>
         <!-- <form action="/users/new" method="post">
             <label> Prénom
