@@ -4,26 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/stylesheets/connexion.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src = "/javascripts/inscription.js"></script>
+    
 </head>
 <body>
-    <form action="/users/new" method="post">
+    
+    <header>
+        <div>
+            <a href="/"><img src="/images/excel.jpeg" alt="Logo" width="100" height="50"></a>
+        </div>
+        <div id="userButton">
+            <img src="/images/user.png" alt="Logo" width="75" height="50">
+            <span id="username"></span>
+        </div>
+        <div id="userMenu">
+            <!-- Contenu du menu utilisateur -->
+            <a id ="connexion" href="/renderUsers/renderConnexion"><button>Se connecter</button></a>
+            <a id = "inscription" href="/renderUsers/renderNew"><button>S'inscrire</button></a>
+        </div>
+    </header>
+    
+    <form method="post" class="box" id = "forminscription">
+        <svg width="30" height="30" viewBox="0 0 24 24">
+            <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+        </svg>
+        <h1>Inscription</h1>
         <label> Prénom
-            <input type="text" name="firstname" value = "<% locals.firstname %>"/>
+            <input type="text" name="firstname" id ="firstname"/>
         </label>
         <label> Nom
-            <input type="text" name="lastname" value = "<% locals.lastname %>"/>
+            <input type="text" name="lastname" id ="lastname"/>
         </label>
         <label> Adresse mail
-            <input type="email" name="mail" value = "<% locals.mail %>"/>
+            <input type="email" name="mail" id ="mail"/>
         </label>
         <label> Login
-            <input type="text" name="login" value = "<% locals.login %>"/>
+            <input type="text" name="login" id ="login"/>
         </label>
         <label> Mot de passe
-            <input type="password" name="mdp" value = "<% locals.mdp %>"/>
+            <input type="password" name="mdp" id ="mdp"/>
         </label>
-        <button type="submit" > Submit </button>
-    </form>
-    
-</body>
-</html>
+        
+        <!-- <% if (locals.error) { %>
+            <p class="error-message"><%= locals.error %></p>
+            <% } %> -->
+            <button type="submit" > S'inscrire </button>
+        </form>
+        <!-- <form action="/users/new" method="post">
+            <label> Prénom
+                <input type="text" name="firstname" value = "<% locals.firstname %>"/>
+            </label>
+            <label> Nom
+                <input type="text" name="lastname" value = "<% locals.lastname %>"/>
+            </label>
+            <label> Adresse mail
+                <input type="email" name="mail" value = "<% locals.mail %>"/>
+            </label>
+            <label> Login
+                <input type="text" name="login" value = "<% locals.login %>"/>
+            </label>
+            <label> Mot de passe
+                <input type="password" name="mdp" value = "<% locals.mdp %>"/>
+            </label>
+            <button type="submit" > Submit </button>
+        </form> -->
+        
+        
+        
+    </body>
+    </html>

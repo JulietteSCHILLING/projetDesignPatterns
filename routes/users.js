@@ -21,8 +21,9 @@ router.get('/', (req, res) => {
 
 router.post('/new', (req, res) => {
   console.log('Requête POST reçue');
-  const nom = req.body.lastname;
-  const prenom = req.body.firstname;
+  console.log(req.body);
+  const nom = req.body.nomCompte;
+  const prenom = req.body.prenomCompte;
   const mail = req.body.mail;
   const login = req.body.login;
   const mdp = req.body.mdp;
@@ -33,12 +34,12 @@ router.post('/new', (req, res) => {
     if (err) {
       console.error('Erreur lors de l\'insertion des données : ' + err);
       db.closeDB(connection);
-      res.status(500).send('Erreur lors de l\'insertion des données');
+      res.status(500).json({ error: 'Une erreur s\'est produite côté serveur' });
     } else {
       console.log('Utilisateur inséré avec succès');
       db.closeDB(connection);
 
-      res.send('Nouvel utilisateur créé avec succès. Cliquez sur le bouton ci-dessous pour revenir à la page d\'accueil.<br><a href="/"><button>Retour à l\'accueil</button></a>');
+      res.json({ success: true });
     }
   });
 });

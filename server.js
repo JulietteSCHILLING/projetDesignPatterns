@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const db = require('./config/db');
+const multer = require('multer');
+const storage = multer.memoryStorage(); // Vous pouvez ajuster le stockage selon vos besoins
+const upload = multer({ storage: storage });
+app.use(upload.any());
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
