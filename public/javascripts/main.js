@@ -1,11 +1,6 @@
-
-
 import { getCookie, supprimerCookie } from './cookie.js';
 
 let test = getCookie('user');
-
-console.log(test); 
-
 
 function search_document() {
   let input = $('#searchbar').val().toLowerCase();
@@ -26,7 +21,6 @@ function search_document() {
 
 document.addEventListener('DOMContentLoaded', () => {
   if(test){
-    console.log("on existe");
     $('#connexion').hide();
     $('#inscription').hide();
     let usermenu = $("#userMenu");

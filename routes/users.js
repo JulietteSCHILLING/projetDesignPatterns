@@ -86,39 +86,45 @@ router.post('/delete', (req, res) => {
 });
 
 router.post('/connexion', (req, res) => {
-  console.log('Requête POST reçue');
   const login = req.body.login;
   const mdp = req.body.mdp;
 
   // Effectuer une requête à la base de données pour récupérer tous les utilisateurs
   connection = db.openDB();
-  connection.query('SELECT idCompte as id FROM COMPTE WHERE login = ? AND mdp = ?',[login,mdp], (err, results) => {
-  if (err) {
-        console.error('Erreur lors de la récupération de le l\'utilisateur : ' + err);
-        res.status(500).send('Erreur lors de la récupération de l\'utilisateur');
-        return;
-      } else {
-      console.log('Utilisateur récupéré avec succès');
+  connection.query('SELECT idCompte as id FROM COMPTE WHERE login = ? AND mdp = ?', [login, mdp], (err, results) => {
       db.closeDB(connection);
 
-      //On ajoute l'id aux cookies
+      if (err) {
+          console.error('Erreur lors de la récupération de l\'utilisateur : ' + err);
+          res.status(500).send('Erreur lors de la récupération de l\'utilisateur');
+          return;
+      }
+
+      if (results.length === 0) {
+          // Aucun utilisateur trouvé avec le login et le mot de passe fournis
+          res.render('users/connexion', { error: 'Login ou mot de passe incorrect' });
+          return;
+      }
+
+      // Utilisateur trouvé avec succès
       const id = results[0].id;
 
-      //Le cookie s'expire en 1 jour
+      // Le cookie s'expire en 1 jour
       const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate()+1);
+      expirationDate.setDate(expirationDate.getDate() + 1);
 
-      res.cookie("user",id,{maxAge: expirationDate});
+      res.cookie("user", id, { maxAge: expirationDate });
 
-      res.send('Utilisateur connecté avec succès. Cliquez sur le bouton ci-dessous pour revenir à la page d\'accueil.<br><a href="/"><button>Retour à l\'accueil</button></a>');
-    }
+      //res.send('Utilisateur connecté avec succès. Cliquez sur le bouton ci-dessous pour revenir à la page d\'accueil.<br><a href="/"><button>Retour à l\'accueil</button></a>');
+      res.redirect("/");
   });
 });
 
 
-router.get('/:id', (req, res) => {
-  res.send(`COMPTE get avec son id ${req.params.id}`);
-});
+
+// router.get('/:id', (req, res) => {
+//   res.send(`COMPTE get avec son id ${req.params.id}`);
+// });
 
 
 module.exports = router;

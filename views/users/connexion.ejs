@@ -4,17 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
+    <script src = "/javascripts/connexion.js"></script>
+    <link rel="stylesheet" href="/stylesheets/connexion.css">
 </head>
 <body>
-    <form action="/users/connexion" method="post">
+    <style>
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        
+        #userMenu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+        
+        #userButton {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Alignez les éléments au centre dans le sens vertical */
+        } 
+    </style>
+    <header>
+        <div>
+            <a href="/"><img src="/images/excel.jpeg" alt="Logo" width="100" height="50"></a>
+        </div>
+        <div id="userButton">
+            <img src="/images/user.png" alt="Logo" width="75" height="50">
+            <span id="username"></span>
+        </div>
+        <div id="userMenu">
+            <!-- Contenu du menu utilisateur -->
+            <a id ="connexion" href="/renderUsers/renderConnexion"><button>Se connecter</button></a>
+            <a id = "inscription" href="/renderUsers/renderNew"><button>S'inscrire</button></a>
+        </div>
+    </header>
+    <form action="/users/connexion" method="post" class="box">
+        <svg width="30" height="30" viewBox="0 0 24 24">
+            <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+        </svg>
+        <h1>Connexion</h1>
         <label> Login
             <input type="text" name="login" value = "<% locals.login %>"/>
         </label>
         <label> Mot de passe
             <input type="password" name="mdp" value = "<% locals.mdp %>"/>
         </label>
-        <button type="submit" > Submit </button>
-    </form>
-    
-</body>
-</html>
+        
+        <% if (locals.error) { %>
+            <p class="error-message"><%= locals.error %></p>
+            <% } %>
+            <button type="submit" > Se connecter </button>
+        </form>
+        
+        <!-- <form action="/users/connexion" methode="post" class="box" >
+            
+            <svg width="30" height="30" viewBox="0 0 24 24">
+                <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"></path>
+            </svg>
+            <h1>Connexion</h1>
+            <input type="text" name="login" placeholder="Votre Nom d'utilisateur" value = "<% locals.login %>">
+            <input type="password" name="mdp" placeholder="Votre Mot De Passe" value = "<% locals.mdp %>">
+            <input type="submit" name="" value="Connexion">
+            
+        </form> -->
+        
+    </body>
+    </html>
