@@ -1,4 +1,12 @@
 
+
+import { getCookie, supprimerCookie } from './cookie.js';
+
+let test = getCookie('user');
+
+console.log(test); 
+
+
 function search_document() {
   let input = $('#searchbar').val().toLowerCase();
 
@@ -17,6 +25,23 @@ function search_document() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+  if(test){
+    console.log("on existe");
+    $('#connexion').hide();
+    $('#inscription').hide();
+    let usermenu = $("#userMenu");
+    let boutonDeconnexion = $("<button>")
+    .text("Déconnexion") // Définissez le texte du bouton
+    .on("click", function() {
+        // Gérez l'événement de clic du bouton de déconnexion ici
+        // Par exemple, vous pouvez déclencher une fonction de déconnexion
+        
+        supprimerCookie('user');
+        location.reload();
+
+    });
+    usermenu.append(boutonDeconnexion);
+  }
   fetchAndDisplayDocuments();
 });
 
