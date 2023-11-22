@@ -5,7 +5,7 @@ const db = require('../config/db');
 router.get('/', (req, res) => {
     // Effectuer une requête à la base de données pour récupérer tous les utilisateurs
     connection = db.openDB();
-    connection.query('SELECT idCompte as id, prenomCompte as nom FROM COMPTE', (err, results) => {
+    connection.query('SELECT idCompte as id, prenomCompte as nom, nomCompte, mail FROM COMPTE', (err, results) => {
       if (err) {
         console.error('Erreur lors de la récupération des utilisateurs : ' + err);
         res.status(500).send('Erreur lors de la récupération des utilisateurs');

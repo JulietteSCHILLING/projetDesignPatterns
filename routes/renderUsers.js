@@ -26,4 +26,21 @@ router.get('/renderDelete', (req, res) => {
     });
 });
 
+router.get("/usersCreateur/:idCompte", (req, res)=>{
+    let id = req.params.idCompte;
+    console.log(id);
+    connection = db.openDB();
+    
+    connection.query("SELECT prenomCompte as prenomCreateur, nomCompte as nomCreateur FROM COMPTE WHERE idCompte = ?" , [id], (err, results) =>{
+        if(err){
+            console.error('Erreur lors de la récupération des utilisateurs : ' + err);
+            res.status(500).send('Erreur lors de la récupération des utilisateurs');
+            return;
+        }else{
+            db.closeDB(connection);
+            res.json(results);
+        }
+    })
+})
+
 module.exports = router;

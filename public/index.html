@@ -29,9 +29,21 @@
     
     <h2 style = "text-align: center;">Liste de vos documents : </h2>
     <ul id="userDocs"></ul>
-    <a href="/renderUsers/renderNew"><button>Ajouter un utilisateur</button></a>
-    <a href="/renderUsers/renderDelete"><button>Supprimer un utilisateur</button></a>
+    
+    
+    
+    
+    
+    <div class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeUserListModal()">&times;</span>
+            <h2>Liste des Utilisateurs</h2>
+            <!-- Contenu de la liste des utilisateurs -->
+        </div>
+    </div>
     <a href="/renderDocument/renderCreateDocument"><button>Créer un document</button></a>
+    
+    
     <script src="/javascripts/main.js"></script>
     <script>
         // JavaScript pour gérer l'affichage du menu utilisateur
@@ -41,7 +53,7 @@
         userButton.addEventListener('click', () => {
             userMenu.style.display = (userMenu.style.display === 'none' || userMenu.style.display === '') ? 'block' : 'none';
         });
-
+        
         //Pour l'affichage de l'utilisateur
         $(document).ready(function () {
             // Récupérer le nom d'utilisateur depuis le serveur en utilisant l'ID stocké dans les cookies

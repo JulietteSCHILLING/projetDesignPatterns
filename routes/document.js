@@ -42,6 +42,25 @@ router.post('/new', (req, res) => {
 });
 
 
+router.post('/partagerDocument', (req,res)=> {
+    let idDocument = req.body.documentId;
+    let idCompte = req.body.compteId;
+    connection = db.openDB();
+
+    connection.query('Insert into ACCES(idCompte, idDocument) values (?,?)', [idCompte, idDocument], (err)=> {
+        if(err){
+            db.closeDB(connection);
+            console.error('Erreur lors du partage du document ' + err);
+            res.status(500).send('Erreur lors du partage');
+        }else{
+            db.closeDB(connection);
+            console.log('Document partagé avec succés');
+            res.status(200).send('Document partagé avec succés');
+        }
+    })
+
+});
+
 router.post('/updateCase', (req, res) => {
     const caseId = req.body.caseId;
     const newText = req.body.newText;
