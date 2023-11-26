@@ -117,6 +117,48 @@
             });
         });
 
+
+        //Ici, on gère les websockets pour la mise à jour en temps réel des données
+        const socket = new WebSocket('ws://localhost:6061'); // Connexion au serveur WebSocket
+
+        // Attacher l'événement blur à tous les champs de texte
+        const inputF = document.querySelectorAll('input[type="text"]');
+        inputF.forEach(input => {
+            input.addEventListener('blur', function () {
+                const caseId = this.id.substring(5); // Extraire l'ID de la case du champ de texte
+                const newText = this.value;
+
+                // Envoyer un message WebSocket au serveur
+                const message = JSON.stringify({ caseId, newText });
+                socket.send(message);
+            });
+        });
+
+        // Écouter les messages WebSocket du serveur
+        socket.addEventListener('message', (event) => {
+            const blobReader = new FileReader();
+
+            blobReader.onload = function (event) {
+                const dataAsString = event.target.result;
+
+                // Maintenant, dataAsString est la représentation en texte des données du Blob
+
+                try {
+                    const data = JSON.parse(dataAsString);
+                    // Traitez data comme un objet JSON valide
+                    const caseId = data.caseId;
+                    const newText = data.newText;
+
+                    // Mettre à jour le texte de la case avec la nouvelle valeur
+                    document.getElementById('text' + caseId).innerText = newText;
+                } catch (error) {
+                    console.error('Erreur lors de la conversion JSON :', error);
+                }
+            };
+
+            // Convertissez le Blob en texte
+            blobReader.readAsText(event.data);
+        });
     </script>
 
 

@@ -69,12 +69,11 @@ router.post('/updateCase', (req, res) => {
 
     // Effectuez la mise à jour dans la base de données avec la nouvelle valeur
     connection.query('UPDATE CASEDOC SET texte = ? WHERE idCase = ?', [newText, caseId], (err) => {
+        db.closeDB(connection);
         if (err) {
-            db.closeDB(connection);
             console.error('Erreur lors de la mise à jour de la case : ' + err);
             res.status(500).send('Erreur lors de la mise à jour de la case');
         } else {
-            db.closeDB(connection);
             console.log('Case mise à jour avec succès');
             res.status(200).send('Case mise à jour avec succès');
         }
