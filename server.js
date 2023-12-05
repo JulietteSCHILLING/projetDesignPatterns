@@ -21,9 +21,46 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+// //Connexion
+// wss.on('connection', (ws) => {
+//     console.log('Nouvelle connexion WebSocket');
 
-wss.on('connection', (ws) => {
+//     // Écoute des messages du client
+//     ws.on('message', (message) => {
+//         console.log(`Reçu: ${message}`);
+//         // Envoyer le message à tous les clients connectés (broadcast)
+//         wss.clients.forEach((client) => {
+//             if (client.readyState === WebSocket.OPEN) {
+//                 client.send(message);
+//             }
+//         });
+//     });
+// });
+
+let listUsers = [];
+
+// Lorsqu'un utilisateur se connecte
+wss.on('connection', (ws, req) => {
     console.log('Nouvelle connexion WebSocket');
+
+    // Récupérer l'ID utilisateur depuis le cookie
+    const userId = getUserIdFromCookie(req);
+    listUsers.push(userId);
+    console.log("userId = ", userId)
+
+    // Envoyer la liste des utilisateurs actuels à tous les clients
+    broadcastUserList();
+
+    // Gérer la fermeture de la connexion WebSocket
+    ws.on('close', () => {
+        // Retirer l'utilisateur de la liste
+        const index = listUsers.indexOf(userId);
+        if (index !== -1) {
+            listUsers.splice(index, 1);
+            // Envoyer la liste mise à jour aux clients
+            broadcastUserList();
+        }
+    });
 
     // Écoute des messages du client
     ws.on('message', (message) => {
@@ -36,6 +73,37 @@ wss.on('connection', (ws) => {
         });
     });
 });
+
+// Lorsqu'un utilisateur se déconnecte
+wss.on('disconnect', () => {
+    // Envoyer la liste mise à jour aux clients
+    broadcastUserList();
+});
+
+// Fonction pour envoyer la liste des utilisateurs à tous les clients
+function broadcastUserList() {
+    wss.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify({ type: 'userList', users: listUsers }));
+        }
+    });
+}
+
+// Fonction pour extraire l'ID utilisateur du cookie
+function getUserIdFromCookie(req) {
+    const cookieHeader = req.headers.cookie;
+    if (cookieHeader) {
+        const cookies = cookieHeader.split('; ');
+        for (const cookie of cookies) {
+            const [name, value] = cookie.split('=');
+            if (name === 'user') {
+                return value;
+            }
+        }
+    }
+    return null; // Retournez null si le cookie n'est pas trouvé
+}
+
 
 server.listen(6061, () => {
     console.log('Serveur WebSocket en cours d\'écoute sur le port 6061');

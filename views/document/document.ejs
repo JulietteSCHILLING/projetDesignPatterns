@@ -19,6 +19,9 @@
     <p>Date de dernière modification : <%= document[0].dateDernModif.toDateString() %>
     </p>
 
+    <p>Liste des utilisateurs sur ce doc :</p>
+    <ul id="userList"></ul>
+
 
     <table>
         <thead>
@@ -136,28 +139,57 @@
 
         // Écouter les messages WebSocket du serveur
         socket.addEventListener('message', (event) => {
-            const blobReader = new FileReader();
+            //instanceof ne fonctionnait pas car on se retrouve avec des typeof 'string' ou 'object' au lieu de 'String' et 'Object'
+            if(typeof event.data === 'string'){
+                const data = JSON.parse(event.data);
+                // Mettre à jour l'affichage avec la nouvelle liste d'utilisateurs
+                const userListElement = document.getElementById('userList'); // Remplacez par votre élément d'affichage
+                userListElement.innerHTML = ''; // Effacez l'affichage actuel
 
-            blobReader.onload = function (event) {
-                const dataAsString = event.target.result;
+                data.users.forEach((user) => {
+                    const userElement = document.createElement('li');
+                    fetch('/users/getNomPrenomId/'+user, {
+                        method: 'GET'
+                    }).then(response => {
+                            if (!response.ok) {
+                                throw new Error('Erreur lors de la récupération du nom prénom');
+                            }
+                            return response.json();
+                    })
+                    .then(data => {
+                        const username = data[0].nomCompte;
+                        const userFirstname = data[0].prenomCompte;
+                        userElement.textContent = userFirstname + " " + username;
+                        userListElement.appendChild(userElement);
+                    })
+                    .catch(error => console.error('Erreur lors de la récupération du nom prénom :', error.message));
+                    
+                    
+                });
+            }else{
+                const blobReader = new FileReader();
 
-                // Maintenant, dataAsString est la représentation en texte des données du Blob
+                blobReader.onload = function (event) {
+                    const dataAsString = event.target.result;
 
-                try {
-                    const data = JSON.parse(dataAsString);
-                    // Traitez data comme un objet JSON valide
-                    const caseId = data.caseId;
-                    const newText = data.newText;
+                    // Maintenant, dataAsString est la représentation en texte des données du Blob
 
-                    // Mettre à jour le texte de la case avec la nouvelle valeur
-                    document.getElementById('text' + caseId).innerText = newText;
-                } catch (error) {
-                    console.error('Erreur lors de la conversion JSON :', error);
-                }
-            };
+                    try {
+                        const data = JSON.parse(dataAsString);
+                        // Traitez data comme un objet JSON valide
+                        const caseId = data.caseId;
+                        const newText = data.newText;
 
-            // Convertissez le Blob en texte
-            blobReader.readAsText(event.data);
+                        // Mettre à jour le texte de la case avec la nouvelle valeur
+                        document.getElementById('text' + caseId).innerText = newText;
+                    } catch (error) {
+                        console.error('Erreur lors de la conversion JSON :', error);
+                    }
+                };
+
+                // Convertissez le Blob en texte
+                blobReader.readAsText(event.data);
+            }
         });
     </script>
 

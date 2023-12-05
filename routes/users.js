@@ -44,9 +44,27 @@ router.post('/new', (req, res) => {
   });
 });
 
-//Route pour récupérer le nom d'un utilisateur avec son id
+//Route pour récupérer le nom d'un utilisateur avec son id dans les cookies
 router.get('/getNomPrenom', (req, res) => {
   const idCompte = req.cookies.user;
+
+  const connection = db.openDB();
+  connection.query('SELECT nomCompte, prenomCompte FROM COMPTE WHERE idCompte = ?', [idCompte], (err, result) => {
+    db.closeDB(connection);
+    if (err) {
+      console.error('Erreur lors de la récupération de l\'utilisateur : ' + err);
+      res.status(500).send('Erreur lors de la récupération de l\'utilisateur');
+    } else {
+      console.log('Utilisateur récupéré avec succès');
+      res.json(result)
+    }
+  });
+});
+
+
+//Route pour récupérer le nom d'un utilisateur avec son id
+router.get('/getNomPrenomId/:id', (req, res) => {
+  const idCompte = req.params.id; // Récupérez l'ID de l'utilisateur à supprimer depuis les paramètres de l'URL
 
   const connection = db.openDB();
   connection.query('SELECT nomCompte, prenomCompte FROM COMPTE WHERE idCompte = ?', [idCompte], (err, result) => {
