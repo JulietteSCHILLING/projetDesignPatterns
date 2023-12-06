@@ -20,8 +20,6 @@ function openDB() {
     console.log('Connecté à la base de données MySQL en tant qu ID ' + connection.threadId);
   });
 
-  console.log("connexion : ", connection);
-
   return connection;
 }
 
