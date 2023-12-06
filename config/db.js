@@ -8,7 +8,8 @@ function openDB() {
     user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DBNAME,
-    port: process.env.PORT
+    port: process.env.PORT,
+    connectTimeout: 60000
   });
 
   connection.connect((err) => {
