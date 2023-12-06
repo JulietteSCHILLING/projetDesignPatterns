@@ -20,6 +20,17 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+if (process.env.NODE_ENV === 'development') {
+    app.use((err, req, res, next) => {
+        console.error(err.stack);
+        res.status(500).send(`Erreur interne du serveur : ${err.message}`);
+    });
+} else {
+    app.use((err, req, res, next) => {
+        res.status(500).send('Erreur interne du serveur');
+    });
+}
+
 let listUsers = [];
 
 // Lorsqu'un utilisateur se connecte
