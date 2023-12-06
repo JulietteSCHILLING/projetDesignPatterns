@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Utilisateurs</title>
 </head>
+
 <body>
     <h1>Liste des Utilisateurs</h1>
     <ul>
-        <% userList.forEach(user => { %>
-            <li>ID: <%= user.id %>, Nom: <%= user.nom %></li>
-        <% }); %>
+        <% userList.forEach(user=> { %>
+            <li>ID: <%= user.id %>, Nom: <%= user.nom %>
+            </li>
+            <% }); %>
     </ul>
 </body>
+
 </html>

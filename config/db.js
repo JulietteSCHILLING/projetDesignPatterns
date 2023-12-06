@@ -1,11 +1,14 @@
 const mysql = require('mysql2');
+require('dotenv').config();
 
 function openDB() {
+  console.log(process.env.DB_DBNAME);
   const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    database: 'ProjetDesignPatterns',
-    port: 3306
+    host: process.env.DB_HOST,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DBNAME,
+    port: process.env.PORT
   });
 
   connection.connect((err) => {
