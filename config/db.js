@@ -4,11 +4,11 @@ require('dotenv').config();
 function openDB() {
   console.log('test')
   const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DBNAME,
-    port: process.env.PORT,
+    host: sql11.freemysqlhosting.net,
+    user: sql11668118,
+    password: ltJmN8JHZz,
+    database: sql11668118,
+    port: 3306,
     connectTimeout: 60000
   });
 
