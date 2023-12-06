@@ -20,23 +20,6 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-// //Connexion
-// wss.on('connection', (ws) => {
-//     console.log('Nouvelle connexion WebSocket');
-
-//     // Écoute des messages du client
-//     ws.on('message', (message) => {
-//         console.log(`Reçu: ${message}`);
-//         // Envoyer le message à tous les clients connectés (broadcast)
-//         wss.clients.forEach((client) => {
-//             if (client.readyState === WebSocket.OPEN) {
-//                 client.send(message);
-//             }
-//         });
-//     });
-// });
-
 let listUsers = [];
 
 // Lorsqu'un utilisateur se connecte
@@ -122,4 +105,6 @@ app.use("/renderUsers", renderUserRouter);
 const renderDocumentRouter = require('./routes/renderDocument');
 app.use("/renderDocument", renderDocumentRouter);
 
-app.listen(3000);
+app.listen(3000, () => {
+    console.log('Serveur node en cours d\'écoute sur le port 3000');
+});
