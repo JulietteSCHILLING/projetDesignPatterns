@@ -4,10 +4,10 @@ require('dotenv').config();
 function openDB() {
   console.log('test')
   const connection = mysql.createConnection({
-    host: sql11.freemysqlhosting.net,
-    user: sql11668118,
-    password: ltJmN8JHZz,
-    database: sql11668118,
+    host: 'sql11.freemysqlhosting.net',
+    user: 'sql11668118',
+    password: 'ltJmN8JHZz',
+    database: 'sql11668118',
     port: 3306,
     connectTimeout: 60000
   });
