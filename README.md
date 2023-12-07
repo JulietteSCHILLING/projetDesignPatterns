@@ -1,6 +1,9 @@
 # projetDesignPatterns
 Projet de dev mob en design patterns M1-S7
 
+Mise à jour du 7/12/2023 :
+  Le serveur de base de données est à présent distant, il suffit donc de lancer la commande ./startServer.sh dans le répertoire principal (ou npm run devStart) puis ouvrir http://localhost:3000/ dans votre navigateur.
+
 
 toutes les commandes : 
 
@@ -9,7 +12,7 @@ toutes les commandes :
 - npm i --save-dev nodemon
 - npm i ejs
 - npm install mysql2
-- /bin/python3 config/create_db.py (pour installer la base de données)
+- /bin/python3 config/create_db.py (pour installer la base de données en local)
 
 et pour lancer le serveur : npm run devStart
 
