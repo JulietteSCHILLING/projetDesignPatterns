@@ -10,7 +10,6 @@ $(document).ready(function () {
         console.log('Le formulaire a été soumis !');
         const formData = new FormData();
         if(checkValue('firstname') && checkValue('lastname') && checkValue('mail')){
-            console.log($("#lastname").val());
             formData.append("nomCompte", $("#lastname").val());
             formData.append("prenomCompte", $("#firstname").val());
             formData.append("mail", $("#mail").val());

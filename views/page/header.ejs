@@ -6,15 +6,11 @@
     <title>Document</title>
     <link href="/stylesheets/index.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="/javascripts/cookie.js"></script>
 </head>
 <body>
     <header>
         <div>
             <a href="/"><img src="/images/excel.jpeg" alt="Logo" width="100" height="50"></a>
-        </div>
-        <div>
-            <input id="searchbar" onkeyup="search_document()" type="text" name="search" placeholder="Recherche">
         </div>
         <div id="userButton">
             <img src="/images/user.png" alt="Logo" width="75" height="50">
@@ -26,11 +22,6 @@
             <a id = "inscription" href="/renderUsers/renderNew"><button>S'inscrire</button></a>
         </div>
     </header>
-    
-    <h2 style = "text-align: center;">Liste de vos documents : </h2>
-    <ul id="userDocs"></ul>
-    
-    <a href="/renderDocument/renderCreateDocument"><button id="createDoc">Créer un document</button></a>
     
     
     <script src="/javascripts/main.js"></script>
@@ -57,12 +48,6 @@
                 console.error('Erreur lors de la récupération du nom d\'utilisateur');
             });
         });
-
-        //On verifie si l'utiilisateur est connecté et qu'il peut créer un document
-        let user = getCookie('user');
-        if(!user){
-            document.getElementById('createDoc').style.display = 'none';
-        }
     </script>
 </body>
 </html>

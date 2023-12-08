@@ -1,7 +1,6 @@
 
 
-
-let test = getCookie('user');
+let userCookie = getCookie('user');
 
 
 function search_document() {
@@ -22,7 +21,7 @@ function search_document() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (test) {
+  if (userCookie) {
     $('#connexion').hide();
     $('#inscription').hide();
     let usermenu = $("#userMenu");
@@ -99,7 +98,6 @@ function fetchAndDisplayDocuments() {
       else {
         userdoc.append('<h3>Vos documents :</h3>');
         for (let i = 0; i < data.length; i++) {
-          console.log(data[i]);
           userdoc.append(`
             <li class="documents" style="list-style-type: none; display: flex; align-items: center; justify-content: space-between; width: 90vw; margin: 10px auto;">
             <a href="/renderDocument/renderDocument/${data[i].idDocument}" style="text-decoration: none;">
@@ -145,7 +143,6 @@ function fetchAndDisplayDocuments() {
         userdoc.append('<h3>Documents partagés avec vous :</h3>');
       }
       for (let i = 0; i < data.length; i++) {
-        console.log(data[i].idCreateur);
         fetch(`/renderUsers/usersCreateur/${data[i].idCreateur}`)
           .then(response => {
             if (!response.ok) {
@@ -194,7 +191,7 @@ function openUserListModal(idDocument) {
     .then(data => {
       const ul = $('<ul id="usershare"></ul>');
       data.forEach(user => {
-        if (test != user.id) {
+        if (userCookie != user.id) {
           let listItem = $(`<li id = "${user.id}"></li>`).text(`${user.nomCompte} ${user.nom} : ${user.mail}`);
           listItem.append(`<button class="listUsersShare" onclick="partagerDocument(${idDocument}, ${user.id})">Add</button>`);
           ul.append(listItem);
@@ -251,9 +248,6 @@ function filterUsers() {
 
 
 function partagerDocument(idDocument, idUser) {
-
-  console.log(idUser);
-  console.log(idDocument);
   fetch('/document/partagerDocument', {
     method: 'POST',
     headers: {
@@ -269,14 +263,28 @@ function partagerDocument(idDocument, idUser) {
         throw new Error(response.statusText);
       }
       return response.json();
-    }).then(data => {
-      console.log(data);
-
     }).catch(error => {
       console.error(error);
     })
 
 }
+
+function getCookie(name) {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Vérifie si le nom du cookie correspond à celui recherché
+      if (cookie.startsWith(`${name}=`)) {
+          return cookie.substring(name.length + 1); // Renvoie la valeur du cookie
+      }
+  }
+  return null; // Renvoie null si le cookie n'est pas trouvé
+}
+
+function supprimerCookie(nomCookie) {
+  document.cookie = nomCookie + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
 
 // $(document).on('click', '.listUsersShare', function(){
 //   let id = $(this).attr('id');

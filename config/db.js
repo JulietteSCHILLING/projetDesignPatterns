@@ -2,7 +2,6 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 function openDB() {
-  console.log('test')
   const connection = mysql.createConnection({
     host: 'sql11.freemysqlhosting.net',
     user: 'sql11668118',

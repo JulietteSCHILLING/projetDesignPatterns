@@ -20,8 +20,6 @@ router.get('/', (req, res) => {
   
 
 router.post('/new', (req, res) => {
-  console.log('Requête POST reçue');
-  console.log(req.body);
   const nom = req.body.nomCompte;
   const prenom = req.body.prenomCompte;
   const mail = req.body.mail;
