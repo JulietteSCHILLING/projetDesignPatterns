@@ -32,6 +32,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 let listUsers = [];
+let listDocs = [];
 
 // Lorsqu'un utilisateur se connecte
 wss.on('connection', (ws, req) => {
@@ -40,7 +41,11 @@ wss.on('connection', (ws, req) => {
     // Récupérer l'ID utilisateur depuis le cookie
     const userId = getUserIdFromCookie(req);
     listUsers.push(userId);
-    console.log("userId = ", userId)
+
+    // Récupérer l'ID du document à partir de la requête
+    const urlParams = new URLSearchParams(req.url.split('?')[1]);
+    const documentId = urlParams.get('documentId');
+    listDocs.push(documentId);
 
     // Envoyer la liste des utilisateurs actuels à tous les clients
     broadcastUserList();
@@ -51,6 +56,7 @@ wss.on('connection', (ws, req) => {
         const index = listUsers.indexOf(userId);
         if (index !== -1) {
             listUsers.splice(index, 1);
+            listDocs.splice(index, 1);
             // Envoyer la liste mise à jour aux clients
             broadcastUserList();
         }
@@ -58,7 +64,7 @@ wss.on('connection', (ws, req) => {
 
     // Écoute des messages du client
     ws.on('message', (message) => {
-        console.log(`Reçu: ${message}`);
+        //console.log(`Reçu: ${message}`);
         // Envoyer le message à tous les clients connectés (broadcast)
         wss.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
@@ -78,7 +84,7 @@ wss.on('disconnect', () => {
 function broadcastUserList() {
     wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({ type: 'userList', users: listUsers }));
+            client.send(JSON.stringify({ type: 'userList', users: listUsers, docs: listDocs }));
         }
     });
 }

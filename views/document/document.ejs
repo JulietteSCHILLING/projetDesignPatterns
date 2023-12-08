@@ -121,8 +121,12 @@
         });
 
 
-        //Ici, on gère les websockets pour la mise à jour en temps réel des données
-        const socket = new WebSocket('ws://localhost:6061'); // Connexion au serveur WebSocket
+        // Récupérez l'ID du document depuis votre modèle EJS
+        const documentId = '<%= document[0].idDocument %>';
+
+        // Créez la connexion WebSocket en incluant l'ID du document
+        const socket = new WebSocket(`ws://localhost:6061?documentId=${documentId}`);
+
 
         // Attacher l'événement blur à tous les champs de texte
         const inputF = document.querySelectorAll('input[type="text"]');
@@ -146,26 +150,51 @@
                 const userListElement = document.getElementById('userList'); // Remplacez par votre élément d'affichage
                 userListElement.innerHTML = ''; // Effacez l'affichage actuel
 
-                data.users.forEach((user) => {
-                    const userElement = document.createElement('li');
-                    fetch('/users/getNomPrenomId/'+user, {
-                        method: 'GET'
-                    }).then(response => {
-                            if (!response.ok) {
-                                throw new Error('Erreur lors de la récupération du nom prénom');
-                            }
-                            return response.json();
-                    })
-                    .then(data => {
-                        const username = data[0].nomCompte;
-                        const userFirstname = data[0].prenomCompte;
-                        userElement.textContent = userFirstname + " " + username;
-                        userListElement.appendChild(userElement);
-                    })
-                    .catch(error => console.error('Erreur lors de la récupération du nom prénom :', error.message));
+
+                for (let i = 0; i < data.users.length; i++) {
+                    let doc = data.docs[i]
+                    if(doc === documentId){
+                        let user = data.users[i]
+                        const userElement = document.createElement('li');
+                        fetch('/users/getNomPrenomId/'+user, {
+                            method: 'GET'
+                        }).then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Erreur lors de la récupération du nom prénom');
+                                }
+                                return response.json();
+                        })
+                        .then(data => {
+                            const username = data[0].nomCompte;
+                            const userFirstname = data[0].prenomCompte;
+                            userElement.textContent = userFirstname + " " + username;
+                            userListElement.appendChild(userElement);
+                        })
+                        .catch(error => console.error('Erreur lors de la récupération du nom prénom :', error.message));
+                    }
+                    
+                }
+
+                // data.users.forEach((user) => {
+                //     const userElement = document.createElement('li');
+                //     fetch('/users/getNomPrenomId/'+user, {
+                //         method: 'GET'
+                //     }).then(response => {
+                //             if (!response.ok) {
+                //                 throw new Error('Erreur lors de la récupération du nom prénom');
+                //             }
+                //             return response.json();
+                //     })
+                //     .then(data => {
+                //         const username = data[0].nomCompte;
+                //         const userFirstname = data[0].prenomCompte;
+                //         userElement.textContent = userFirstname + " " + username;
+                //         userListElement.appendChild(userElement);
+                //     })
+                //     .catch(error => console.error('Erreur lors de la récupération du nom prénom :', error.message));
                     
                     
-                });
+                // });
             }else{
                 const blobReader = new FileReader();
 
