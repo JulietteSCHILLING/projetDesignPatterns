@@ -77,3 +77,22 @@ input[type=text]:focus {
     justify-content: space-between;
     
 }
+
+.options-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon {
+    margin-left: 5px; /* Espace entre le texte et l'icône */
+  }
+  
+  /* Styles spécifiques à Font Awesome - à ajuster selon la bibliothèque d'icônes que vous utilisez */
+  .fa-ellipsis-v::before {
+    content: "\f142";
+  }
+  

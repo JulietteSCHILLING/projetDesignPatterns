@@ -106,7 +106,10 @@ function fetchAndDisplayDocuments() {
         </a>
         <span class="auteurs">Auteur : ${data[i].nomCompte} ${data[i].prenomCompte}</span>
         <div class="options-container">
-        <button class="options-btn">Options</button>
+        <button class="options-btn"> <span class="icon"><i class="fas fa-ellipsis-v"></i></span></button>
+        
+      
+        
         <div class="options-menu" style="display: none;">
         <a onclick="renameDocument('${data[i].idDocument}')"><button>Renommer</button></a>
         <span style="margin: 0 5px;">|</span>
@@ -144,7 +147,7 @@ function fetchAndDisplayDocuments() {
       userdoc.append('<h3>Documents partagés avec vous :</h3>');
     }
     for (let i = 0; i < data.length; i++) {
-      fetch(`/renderUsers/usersCreateur/${data[i].idCreateur}`)
+      fetch(`/users/usersCreateur/${data[i].idCreateur}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(response.statusText);
@@ -158,14 +161,15 @@ function fetchAndDisplayDocuments() {
         </a>
         <span class="auteurs">Auteur : ${donnees[0].nomCreateur} ${donnees[0].prenomCreateur}</span>
         <div class="options-container">
-        <button class="options-btn-share-${data[i].idDocument}">Options</button>
+        <button class="options-btn"> <span class="icon"><i class="fas fa-ellipsis-v"></i></span></button>
+        
         <div class="options-menu" style="display: none;">
         <a onclick="renameDocument('${data[i].idDocument}')"><button>Renommer</button></a>
         </div>
         </div>
         </li>
         `);
-        
+        //<button class="options-btn-share-${data[i].idDocument}">Options</button>
         
         $(`.options-btn-share-${data[i].idDocument}`).on('click', function () {
           $(this).siblings('.options-menu').toggle();
@@ -268,7 +272,6 @@ function partagerDocument(idDocument, idUser) {
   })
   .then(data => {
     if (data.success) {
-      console.log(data.message); // Afficher le message de succès
       const modal = $('.modal');
       modal.css('display', 'none');
       // Traiter les autres données si nécessaire
