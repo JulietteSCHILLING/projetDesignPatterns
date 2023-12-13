@@ -17,6 +17,22 @@ router.get('/', (req, res) => {
       res.json(results);
     });
   });
+
+router.get('/docsPartages/:idDocument', (req, res) => {
+  let id = req.params.idDocument;
+  connection = db.openDB();
+  connection.query("SELECT idCompte as id, prenomCompte as nom, nomCompte, mail FROM COMPTE WHERE NOT EXISTS (SELECT * from ACCES WHERE ACCES.idCompte = COMPTE.idCompte AND ACCES.idDocument = ?)", [id], (err, result) => {
+    if(err){
+      console.error('Erreur lors de la récupération des utilisateurs du document partagé : ' + err);
+      db.closeDB(connection);
+      res.status(500).send('Erreur lors de la récupération des utilisateurs');
+      return;
+    }else{
+      db.closeDB(connection);
+      res.json(result);
+    }
+  })
+})
   
 
 router.post('/new', (req, res) => {

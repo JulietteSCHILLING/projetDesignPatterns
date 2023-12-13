@@ -8,7 +8,7 @@ router.post('/new', (req, res) => {
     const idCompte = req.cookies.user;
     const titre = req.body.titre;
     const date = Date.now();
-
+    
     connection = db.openDB();
     
     // Insérer le document initial
@@ -19,10 +19,10 @@ router.post('/new', (req, res) => {
             res.status(500).send('Erreur lors de l\'insertion des données');
         } else {
             console.log('Document inséré avec succès');
-
+            
             // Récupérer l'ID du document inséré
             const idDocument = results.insertId;
-
+            
             // Insérer les cases associées de 1 à 26 en colonne et ligne avec du texte vide ("")
             for (let ligne = 1; ligne <= 26; ligne++) {
                 for (let colonne = 1; colonne <= 26; colonne++) {
@@ -33,9 +33,9 @@ router.post('/new', (req, res) => {
                     });
                 }
             }
-
+            
             db.closeDB(connection);
-
+            
             res.send('Nouveau document créé avec succès. Cliquez sur le bouton ci-dessous pour revenir à la page d\'accueil.<br><a href="/"><button>Retour à l\'accueil</button></a>');
         }
     });
@@ -46,27 +46,47 @@ router.post('/partagerDocument', (req,res)=> {
     let idDocument = req.body.documentId;
     let idCompte = req.body.compteId;
     connection = db.openDB();
-
-    connection.query('Insert into ACCES(idCompte, idDocument) values (?,?)', [idCompte, idDocument], (err)=> {
-        if(err){
-            db.closeDB(connection);
-            console.error('Erreur lors du partage du document ' + err);
-            res.status(500).send('Erreur lors du partage');
+    connection.query('Select * from ACCES where idCompte = ? AND idDocument = ?', [idCompte, idDocument], (err, result) => {
+        if(result.length == 0){
+            connection.query('Insert into ACCES(idCompte, idDocument) values (?,?)', [idCompte, idDocument], (err)=> {
+                if(err){
+                    db.closeDB(connection);
+                    console.error('Erreur lors du partage du document ' + err);
+                    // res.status(500).send('Erreur lors du partage');
+                    res.json({
+                        success: false,
+                        message: 'Erreur lors du partage',
+                        // Autres données que vous souhaitez inclure
+                    });
+                }else{
+                    db.closeDB(connection);
+                    console.log('Document partagé avec succés');
+                    // res.status(200).send('Document partagé avec succés');
+                    res.json({
+                        success: true,
+                        message: 'Document partagé avec succès',
+                        // Autres données que vous souhaitez inclure
+                    });
+                }
+            })
+            
         }else{
-            db.closeDB(connection);
-            console.log('Document partagé avec succés');
-            res.status(200).send('Document partagé avec succés');
+            res.json({
+                success : false,
+                message : "L'utilisateur a deja accés au document."
+            });
         }
     })
-
+    
+    
 });
 
 router.post('/updateCase', (req, res) => {
     const caseId = req.body.caseId;
     const newText = req.body.newText;
-
+    
     connection = db.openDB();
-
+    
     // Effectuez la mise à jour dans la base de données avec la nouvelle valeur
     connection.query('UPDATE CASEDOC SET texte = ? WHERE idCase = ?', [newText, caseId], (err) => {
         db.closeDB(connection);
@@ -84,9 +104,9 @@ router.post('/updateCase', (req, res) => {
 router.post('/renommer', (req, res) => {
     const docId = req.body.documentId;
     const newName = req.body.newDocumentName;
-
+    
     connection = db.openDB();
-
+    
     // Effectuez la mise à jour dans la base de données avec la nouvelle valeur
     connection.query('UPDATE DOCUMENT SET titre = ? WHERE idDocument = ?', [newName, docId], (err) => {
         if (err) {
@@ -103,9 +123,9 @@ router.post('/renommer', (req, res) => {
 
 router.delete('/supprimer', (req, res) => {
     const docId = req.body.documentId;
-
+    
     connection = db.openDB();
-
+    
     // Effectuez la mise à jour dans la base de données avec la nouvelle valeur
     connection.query('DELETE FROM DOCUMENT WHERE idDocument = ?', [docId], (err) => {
         if (err) {
