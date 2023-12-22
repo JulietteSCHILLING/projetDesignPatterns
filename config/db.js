@@ -3,10 +3,10 @@ require('dotenv').config();
 
 function openDB() {
   const connection = mysql.createConnection({
-    host: 'sql11.freemysqlhosting.net',
-    user: 'sql11668118',
-    password: 'ltJmN8JHZz',
-    database: 'sql11668118',
+    host: 'bmj1gu2eyjwsyoazvqrq-mysql.services.clever-cloud.com',
+    user: 'uyk5bwif3comdnfr',
+    password: 'O0943YoE1OxpaemYSbeP',
+    database: 'bmj1gu2eyjwsyoazvqrq',
     port: 3306,
     connectTimeout: 60000
   });
