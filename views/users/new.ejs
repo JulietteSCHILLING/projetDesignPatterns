@@ -11,30 +11,10 @@
     <script src = "/javascripts/inscription.js"></script>
     
 </head>
+
+<%- include('../page/header.ejs') %>
+
 <body>
-    
-    <header>
-        <div>
-            <a href="/"><img src="/images/excel.jpeg" alt="Logo" width="100" height="50"></a>
-        </div>
-        <div id="userButton">
-            <img src="/images/user.png" alt="Logo" width="75" height="50">
-            <span id="username"></span>
-        </div>
-        <div id="userMenu">
-            <!-- Contenu du menu utilisateur -->
-            <a id ="connexion" href="/renderUsers/renderConnexion"><button>Se connecter</button></a>
-            <a id = "inscription" href="/renderUsers/renderNew"><button>S'inscrire</button></a>
-        </div>
-        <script>
-            const userButton = document.getElementById('userButton');
-            const userMenu = document.getElementById('userMenu');
-            
-            userButton.addEventListener('click', () => {
-                userMenu.style.display = (userMenu.style.display === 'none' || userMenu.style.display === '') ? 'block' : 'none';
-            });
-        </script>
-    </header>
     
     <form method="post" class="box" id = "forminscription">
         <svg width="30" height="30" viewBox="0 0 24 24">

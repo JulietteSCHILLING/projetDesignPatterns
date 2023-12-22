@@ -13,11 +13,27 @@ header {
 #userMenu {
     display: none;
     position: absolute;
-    top: 50px;
+    top: 100px;
     right: 10px;
-    padding: 10px;
+    padding: 20px;
     background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+#userMenu button {
+    padding: 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+    background-color: #555; /* Couleur de fond pour les boutons */
+}
+
+#userMenu button:hover {
+    background-color: #777; /* Couleur de fond au survol des boutons */
 }
 
 #userButton {
@@ -27,21 +43,21 @@ header {
 }
 
 #searchbar{
-    margin-left: 15%;
-    padding:15px;
+    padding:10px;
     border-radius: 10px;
-}
 
-input[type=text]:not(#documentTitle) {
-    width: 100%;
-    -webkit-transition: width 0.15s ease-in-out;
-    transition: width 0.15s ease-in-out;
+    border: 2px solid;
+    display: block;
+    margin: 20px auto;
+    width: 200px;
+    outline: none;
+    transition: 0.25s;
 }
 
 /* When an input field (except the one with ID "documentTitle") gets focus,
 change its width to 150% */
-input[type=text]:not(#documentTitle):focus {
-    width: 150%;
+#searchbar:focus {
+    width: 280px;
 }
 
 
@@ -172,4 +188,43 @@ input[type=text]:not(#documentTitle):focus {
 /* Pour ajouter un effet de survol (si nécessaire) */
 #saveButton:hover {
     opacity: 0.8;  /* Ajustez l'opacité pour donner un effet de survol */
+}
+
+.documents {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90vw;
+    margin: 10px auto;
+}
+
+.options-menu {
+    display: none;
+    position: absolute;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+.options-menu button{
+
+    margin: 2.5px;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #555; /* Couleur de fond pour les boutons */    
+}
+
+#userDocs li {
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

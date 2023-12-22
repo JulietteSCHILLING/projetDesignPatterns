@@ -102,7 +102,7 @@ function fetchAndDisplayDocuments() {
       userdoc.append('<h3>Vos documents :</h3>');
       for (let i = 0; i < data.length; i++) {
         userdoc.append(`
-        <li class="documents" style="list-style-type: none; display: flex; align-items: center; justify-content: space-between; width: 90vw; margin: 10px auto;">
+        <li class="documents">
         <a href="/renderDocument/renderDocument/${data[i].idDocument}" style="text-decoration: none;">
         ${data[i].titre}
         </a>
@@ -112,11 +112,9 @@ function fetchAndDisplayDocuments() {
         
         
         
-        <div class="options-menu" style="display: none;">
+        <div class="options-menu">
         <a onclick="renameDocument('${data[i].idDocument}')"><button>Renommer</button></a>
-        <span style="margin: 0 5px;">|</span>
         <button onclick="openUserListModal('${data[i].idDocument}')">  Partager </button>
-        <span style="margin: 0 5px;">|</span>
         <a onclick="confirmDelete('${data[i].idDocument}')"><button>Supprimer</button></a>
         </div>
         </div>
@@ -157,7 +155,7 @@ function fetchAndDisplayDocuments() {
         return response.json();
       }).then(donnees => {
         userdoc.append(`
-        <li class="documents" style="list-style-type: none; display: flex; align-items: center; justify-content: space-between; width: 90vw; margin: 10px auto;">
+        <li class="documents">
         <a href="/renderDocument/renderDocument/${data[i].idDocument}" style="text-decoration: none;">
         ${data[i].titre}
         </a>
@@ -165,7 +163,7 @@ function fetchAndDisplayDocuments() {
         <div class="options-container">
         <button class="options-btn"> <span class="icon"><i class="fas fa-ellipsis-v"></i></span></button>
         
-        <div class="options-menu" style="display: none;">
+        <div class="options-menu">
         <a onclick="renameDocument('${data[i].idDocument}')"><button>Renommer</button></a>
         </div>
         </div>

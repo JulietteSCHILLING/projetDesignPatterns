@@ -31,7 +31,7 @@ label{
   text-transform: uppercase;
   font-weight: 500;
 }
-.box input[type = "text"],.box input[type = "password"], .box input[type = "email"]{
+.box input{
   border:0;
   background: none;
   display: block;
@@ -45,7 +45,7 @@ label{
   border-radius: 24px;
   transition: 0.25s;
 }
-.box input[type = "text"]:focus,.box input[type = "password"]:focus, .box input[type = "email"]:focus{
+.box input:focus{
   width: 280px;
   border-color: #f1c40f;
 }
