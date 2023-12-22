@@ -32,17 +32,18 @@ header {
     border-radius: 10px;
 }
 
-input[type=text] {
+input[type=text]:not(#documentTitle) {
     width: 100%;
     -webkit-transition: width 0.15s ease-in-out;
     transition: width 0.15s ease-in-out;
 }
 
-/* When the input field gets focus,
-change its width to 100% */
-input[type=text]:focus {
+/* When an input field (except the one with ID "documentTitle") gets focus,
+change its width to 150% */
+input[type=text]:not(#documentTitle):focus {
     width: 150%;
 }
+
 
 
 .modal {
@@ -95,4 +96,80 @@ input[type=text]:focus {
   .fa-ellipsis-v::before {
     content: "\f142";
   }
+
+  .image-container {
+    width: 100px;
+    height: 50px;
+    background-image: url('/images/logoo.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
   
+
+.addSpreadsheet {
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 0.9rem 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    box-sizing: border-box;
+    display: inline-block;
+    margin-top: 20%;
+  }
+  
+  .addSpreadsheet {
+    background: #eef9ef;
+    border: 1px solid #43a047;
+    color: #2e7d32;
+    margin-right: 1rem;
+  }
+  
+  .addSpreadsheet img {
+    float: left;
+    margin-right: 0.5rem;
+  }
+
+  .modal2 {
+    display: none; 
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.5); 
+}
+
+.modal-content2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.close2 {
+    float: right;
+    cursor: pointer;
+}
+
+
+#documentTitle {
+    width: 100%;
+}
+
+#saveButton {
+    border: none;  /* Supprime la bordure */
+    background: none;  /* Supprime l'arrière-plan */
+    padding: 0;  /* Supprime le rembourrage */
+    margin-top: 1em;  /* Supprime la marge */
+    width: 20px;  /* Ajustez la largeur si nécessaire */
+    height: auto;  /* Ajustez la hauteur pour conserver les proportions */
+    cursor: pointer;  /* Curseur pointer pour indiquer l'interactivité */
+}
+
+/* Pour ajouter un effet de survol (si nécessaire) */
+#saveButton:hover {
+    opacity: 0.8;  /* Ajustez l'opacité pour donner un effet de survol */
+}

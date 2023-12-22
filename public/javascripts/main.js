@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
       
     });
     usermenu.append(boutonDeconnexion);
+  }else{
+    $(".addSpreadsheet").hide();
   }
   fetchAndDisplayDocuments();
 });
@@ -108,7 +110,7 @@ function fetchAndDisplayDocuments() {
         <div class="options-container">
         <button class="options-btn"> <span class="icon"><i class="fas fa-ellipsis-v"></i></span></button>
         
-      
+        
         
         <div class="options-menu" style="display: none;">
         <a onclick="renameDocument('${data[i].idDocument}')"><button>Renommer</button></a>
@@ -301,32 +303,37 @@ function supprimerCookie(nomCookie) {
   document.cookie = nomCookie + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
+function createNewSpreadsheet(){
+  let modal = $("#myModal");
+  
+  modal.css('display', 'block');
+  
+  
+}
 
-// $(document).on('click', '.listUsersShare', function(){
-//   let id = $(this).attr('id');
-//   console.log(id);
-// });
+$(".close2").click(function(){
+  $("#myModal").hide();
+  $('#documentTitle').val('');
+});
 
-
-
-
-
-
-
-// Votre code Fetch et manipulation des données ici
-// fetch('/users')
-// .then(response => response.json())
-// .then(data => {
-//   const userList = document.getElementById('userList');
-//   console.log(data);
-
-//   // Boucle sur les données pour afficher chaque utilisateur
-//   data.forEach(user => {
-//     const userElement = document.createElement('li');
-//     userElement.textContent = `ID : ${user.id} - Nom : ${user.nom}`;
-//     userList.appendChild(userElement);
-//   });
-// })
-// .catch(error => {
-//   console.error('Erreur lors de la récupération des utilisateurs :', error);
-// });
+$("#saveButton").click(function(){
+  let title = $('#documentTitle').val();
+  console.log(title);
+  let formData = new FormData();
+  formData.append("titre", title);
+  fetch('/document/new', {
+    method : 'POST',
+    body : formData
+  }).then(response => {
+    if(!response.ok){
+      throw new Error(response.statusText);
+    }
+    return response.json();
+  }).then(data => {
+    $("#myModal").css("display", 'none');
+    fetchAndDisplayDocuments()
+    
+  }).catch(error => {
+    console.error(error);
+  })
+});

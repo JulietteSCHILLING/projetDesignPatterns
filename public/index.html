@@ -6,15 +6,16 @@
     <title>Document</title>
     <link href="/stylesheets/index.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pizzly-js@v0.2.3/dist/index.umd.min.js"></script>
     <script src="/javascripts/cookie.js"></script>
     <!-- Ajouter Font Awesome via CDN dans le head de votre document HTML -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    
 </head>
 <body>
     <header>
-        <div>
-            <a href="/"><img src="/images/excel.jpeg" alt="Logo" width="100" height="50"></a>
+        <div class = "img-container">
+            <a href="/"><img src="/images/logoo.png" alt="Logo" width="100" height="50"></a>
         </div>
         <div>
             <input id="searchbar" onkeyup="search_document()" type="text" name="search" placeholder="Recherche">
@@ -32,7 +33,7 @@
     
     <h2 style = "text-align: center;">Liste de vos documents : </h2>
     <ul id="userDocs"></ul>
-
+    
     <div class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close" onclick="closeUserListModal()">&times;</span>
@@ -41,39 +42,47 @@
         </div>
     </div>
     
-    <a href="/renderDocument/renderCreateDocument"><button id="createDoc">Créer un document</button></a>
-    
-    
-    <script src="/javascripts/main.js"></script>
-    <script>
-        // JavaScript pour gérer l'affichage du menu utilisateur
-        const userButton = document.getElementById('userButton');
-        const userMenu = document.getElementById('userMenu');
+    <button class = "addSpreadsheet" onclick="createNewSpreadsheet()"><img width="18" height="18" src="https://cdn.glitch.com/34c68bfe-d0b3-427c-b5a7-0dc0980ab438%2Fgoogle-sheets.svg?v=1592381742810" />
+        <span>Créer un nouveau document</span></button>
+        <!-- <a href="/renderDocument/renderCreateDocument"><button id="createDoc">Créer un document</button></a> -->
         
-        userButton.addEventListener('click', () => {
-            userMenu.style.display = (userMenu.style.display === 'none' || userMenu.style.display === '') ? 'block' : 'none';
-        });
+        <div id="myModal" class="modal2">
+            <div class="modal-content2">
+                <span class="close2">&times;</span>
+                <input type="text" id="documentTitle" placeholder="Titre du document">
+                <img id="saveButton" src="images/save.png" alt="Logo de sauvegarde">
+            </div>
+        </div>
         
-        //Pour l'affichage de l'utilisateur
-        $(document).ready(function () {
-            // Récupérer le nom d'utilisateur depuis le serveur en utilisant l'ID stocké dans les cookies
-            $.get("/users/getNomPrenom", function (data) {
-                // Mettre à jour le contenu du menu utilisateur avec le nom récupéré
-                if (data && data.length > 0) {
-                    const username = data[0].nomCompte;
-                    const userFirstname = data[0].prenomCompte;
-                    $("#username").text(`Bonjour, ${userFirstname} ${username} !`);
-                }
-            }).fail(function () {
-                console.error('Erreur lors de la récupération du nom d\'utilisateur');
+        
+        
+        <script src="/javascripts/main.js"></script>
+        <script>
+            // JavaScript pour gérer l'affichage du menu utilisateur
+            const userButton = document.getElementById('userButton');
+            const userMenu = document.getElementById('userMenu');
+            
+            userButton.addEventListener('click', () => {
+                userMenu.style.display = (userMenu.style.display === 'none' || userMenu.style.display === '') ? 'block' : 'none';
             });
-        });
-
-        //On verifie si l'utiilisateur est connecté et qu'il peut créer un document
-        let user = getCookie('user');
-        if(!user){
-            document.getElementById('createDoc').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
+            
+            //Pour l'affichage de l'utilisateur
+            $(document).ready(function () {
+                // Récupérer le nom d'utilisateur depuis le serveur en utilisant l'ID stocké dans les cookies
+                $.get("/users/getNomPrenom", function (data) {
+                    // Mettre à jour le contenu du menu utilisateur avec le nom récupéré
+                    if (data && data.length > 0) {
+                        const username = data[0].nomCompte;
+                        const userFirstname = data[0].prenomCompte;
+                        $("#username").text(`Bonjour, ${userFirstname} ${username} !`);
+                    }
+                }).fail(function () {
+                    console.error('Erreur lors de la récupération du nom d\'utilisateur');
+                });
+            });
+            
+            
+        </script>
+    </body>
+    </html>
+    

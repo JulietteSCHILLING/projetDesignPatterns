@@ -36,7 +36,12 @@ router.post('/new', (req, res) => {
             
             db.closeDB(connection);
             
-            res.send('Nouveau document créé avec succès. Cliquez sur le bouton ci-dessous pour revenir à la page d\'accueil.<br><a href="/"><button>Retour à l\'accueil</button></a>');
+            res.json({
+                success: true,
+                message: 'Document créé avec succés.',
+                // Autres données que vous souhaitez inclure
+            });
+            // res.send('Nouveau document créé avec succès. Cliquez sur le bouton ci-dessous pour revenir à la page d\'accueil.<br><a href="/"><button>Retour à l\'accueil</button></a>');
         }
     });
 });
