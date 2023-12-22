@@ -228,3 +228,7 @@ change its width to 150% */
     justify-content: space-between;
     align-items: center;
 }
+
+#userDocs li:hover {
+    background-color: #e0e0e0;
+}
