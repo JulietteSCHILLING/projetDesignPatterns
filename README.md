@@ -1,6 +1,9 @@
 # projetDesignPatterns
 Projet de dev mob en design patterns M1-S7
 
+Fin du projet :
+Le rapport et la documentation sont disponibles sur le git.
+
 Mise à jour du 7/12/2023 :
   Le serveur de base de données est à présent distant, il suffit donc de lancer la commande ./startServer.sh dans le répertoire principal (ou npm run devStart) puis ouvrir http://localhost:3000/ dans votre navigateur.
 
